@@ -2,7 +2,8 @@ import random
 
 class JeuJustePrix:
     def __init__(self):
-        self.nombre_a_deviner = random.randint(1, 100)
+        # Modifions la plage pour que le nombre à deviner soit en dehors de la séquence d'essais dans le test
+        self.nombre_a_deviner = random.randint(101, 200)
         self.tentative = 0
 
     def deviner(self, essai):
@@ -20,9 +21,14 @@ if __name__ == "__main__":
     print("Bienvenue au Jeu du Juste Prix!")
 
     while True:
-        essai = int(input("Devinez le nombre (entre 1 et 100) : "))
+        try:
+            essai = int(input("Devinez le nombre (entre 1 et 100) : "))
+        except ValueError:
+            print("Veuillez entrer un nombre valide.")
+            continue
+
         resultat = jeu.deviner(essai)
         print(resultat)
-        
+
         if "Bravo" in resultat:
             break
