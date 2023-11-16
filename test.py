@@ -21,7 +21,7 @@ class TestJeuJustePrix(unittest.TestCase):
                 break
 
         # L'assertion suivante est correcte pour le bon script
-        self.assertTrue("Bravo" in resultat, "Le jeu n'a pas indiqué la victoire.")
+        self.assertTrue("Bravo" in resultat.strip(), "Le jeu n'a pas indiqué la victoire.")
 
 if __name__ == '__main__':
     unittest.main()

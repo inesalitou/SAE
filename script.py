@@ -2,8 +2,8 @@ import random
 
 class JeuJustePrix:
     def __init__(self):
-        # Modifions la plage pour que le nombre à deviner soit en dehors de la séquence d'essais dans le test
-        self.nombre_a_deviner = random.randint(101, 200)
+        # Correction : Utiliser la même plage que dans le test
+        self.nombre_a_deviner = random.randint(1, 100)
         self.tentative = 0
 
     def deviner(self, essai):
