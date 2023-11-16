@@ -44,5 +44,21 @@ class TestJeuJustePrix(unittest.TestCase):
                 self.assertTrue("Bravo" in resultat.strip(), "Le jeu n'a pas indiqué la victoire.")
                 break
 
+    @patch('builtins.input', side_effect=['1'])  # Simule l'entrée d'un booléen (True)
+    def test_jeu_juste_prix_boolean(self, mock_input):
+        jeu = JeuJustePrix()
+        
+        # Capture la sortie standard pour vérifier le message d'erreur
+        with unittest.mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+            try:
+                essai = int(input())
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+            resultat = jeu.deviner(essai)
+            print(resultat)
+
+        self.assertTrue("Veuillez entrer un nombre valide." in mock_stdout.getvalue(), "Le jeu n'a pas indiqué une erreur pour un booléen.")
+
 if __name__ == '__main__':
     unittest.main()
