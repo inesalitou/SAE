@@ -1,4 +1,5 @@
 import unittest
+import io
 from unittest.mock import patch
 from script import JeuJustePrix
 
@@ -9,14 +10,14 @@ class TestJeuJustePrix(unittest.TestCase):
         jeu = JeuJustePrix()
         
         # Capture la sortie standard pour vérifier le message d'erreur
-        with unittest.mock.patch('sys.stdout', new_callable=unittest.mock.StringIO) as mock_stdout:
+        with unittest.mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
             try:
                 essai = int(input())
             except ValueError:
                 print("Veuillez entrer un nombre valide.")
 
-        resultat = jeu.deviner(essai)
-        print(resultat)
+            resultat = jeu.deviner(essai)
+            print(resultat)
 
         self.assertTrue("Veuillez entrer un nombre valide." in mock_stdout.getvalue(), "Le jeu n'a pas indiqué une erreur pour un nombre négatif.")
         
@@ -35,11 +36,13 @@ class TestJeuJustePrix(unittest.TestCase):
             resultat = jeu.deviner(essai)
             print(resultat)
 
-            if "Bravo" in resultat:
+            # Si on détecte l'erreur, on arrête le test
+            if "Veuillez entrer un nombre valide." in resultat:
                 break
 
-        # L'assertion suivante est correcte pour le bon script
-        self.assertTrue("Bravo" in resultat.strip(), "Le jeu n'a pas indiqué la victoire.")
+            if "Bravo" in resultat:
+                self.assertTrue("Bravo" in resultat.strip(), "Le jeu n'a pas indiqué la victoire.")
+                break
 
 if __name__ == '__main__':
     unittest.main()

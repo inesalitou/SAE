@@ -7,6 +7,9 @@ class JeuJustePrix:
         self.tentative = 0
 
     def deviner(self, essai):
+        if essai < 0:
+            return "Veuillez entrer un nombre valide."
+
         self.tentative += 1
 
         if essai < self.nombre_a_deviner:
