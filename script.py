@@ -5,6 +5,7 @@ class JeuJustePrix:
         # Correction : Utiliser la même plage que dans le test
         self.nombre_a_deviner = random.randint(1, 100)
         self.tentative = 0
+        self.niveau = None
 
     def deviner(self, essai):
         try:
@@ -21,7 +22,8 @@ class JeuJustePrix:
             elif essai > self.nombre_a_deviner:
                 return "Trop haut. Essayez à nouveau."
             else:
-                return f"Bravo ! Vous avez deviné le juste prix en {self.tentative} tentatives."
+                self.attribuer_niveau()
+                return f"Bravo ! Vous avez deviné le juste prix en {self.tentative} tentatives. Niveau : {self.niveau}"
 
         except ValueError:
             # Si la conversion en entier échoue, vérifier s'il s'agit de "True" ou "False"
@@ -29,6 +31,17 @@ class JeuJustePrix:
                 return "Veuillez entrer un nombre valide."
             else:
                 return "Veuillez entrer un nombre valide."
+
+    def attribuer_niveau(self):
+        if self.tentative <= 5:
+            self.niveau = "Expert"
+        elif self.tentative <= 10:
+            self.niveau = "Medium"
+        else:
+            self.niveau = "Nul"
+
+    def get_niveau(self):
+        return self.niveau
 
 if __name__ == "__main__":
     jeu = JeuJustePrix()

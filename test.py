@@ -82,16 +82,14 @@ class TestJeuJustePrix(unittest.TestCase):
 
             if "Bravo" in resultat:
                 niveau_attendu = jeu.get_niveau()
-                self.assertTrue("Bravo" in resultat.strip(), "Le jeu n'a pas indiqué la victoire.")
+                self.assertIsNotNone(niveau_attendu, "Le niveau n'a pas été attribué.")
+                print(f"Niveau attendu : {niveau_attendu}")
+
+                # Capture la sortie standard pour vérifier si le niveau est affiché
+                with unittest.mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
+                    self.assertIn(f"Niveau : {niveau_attendu}", mock_stdout.getvalue(), "Le niveau du joueur n'a pas été affiché.")
+                
                 break
-
-        self.assertIsNotNone(niveau_attendu, "Le niveau n'a pas été attribué.")
-        print(f"Niveau attendu : {niveau_attendu}")
-
-        # Capture la sortie standard pour vérifier si le niveau est affiché
-        with unittest.mock.patch('sys.stdout', new_callable=io.StringIO) as mock_stdout:
-            print(f"Niveau affiché : {niveau_attendu}")
-            self.assertIn(f"Niveau : {niveau_attendu}", mock_stdout.getvalue(), "Le niveau du joueur n'a pas été affiché.")
 
 if __name__ == '__main__':
     unittest.main()
